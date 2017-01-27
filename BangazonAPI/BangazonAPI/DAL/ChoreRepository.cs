@@ -22,5 +22,10 @@ namespace BangazonAPI.DAL
             Context.Chores.Add(chore);
             Context.SaveChanges();
         }
+
+        public List<Chore> GetAllChores()
+        {
+            return Context.Chores.ToList();
+        }
     }
 }

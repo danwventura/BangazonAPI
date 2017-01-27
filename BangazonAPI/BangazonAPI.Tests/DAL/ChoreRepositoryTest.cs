@@ -45,25 +45,49 @@ namespace BangazonAPI.Tests.DAL
 
         }
 
-
-        [TestMethod]
-        public void EnsureCanAddInstanceOfChore()
-        {
-            Chore chore1 = new Chore {ChoreID = 1, Name = "Mow the Lawn", status = Chore.Status.InProgress, Description = "Duh", CompletedOn = DateTime.Now };
-            repo.AddNewTask(chore1);
-            int expected_count = 1;
-            int actual_count = repo.Context.Chores.Count();
-            Assert.AreEqual(expected_count, actual_count);
-
-        }
-
-
         [TestMethod]
         public void EnsureCanCreateInstanceOfRepo()
         {
             ChoreRepository repo = new ChoreRepository();
             Assert.IsNotNull(repo);
         }
+
+        [TestMethod]
+        public void EnsureCanAddInstanceOfChore()
+        {
+            //Arrange
+            Chore chore1 = new Chore {ChoreID = 1, Name = "Mow the Lawn", status = Chore.Status.InProgress, Description = "Duh", CompletedOn = DateTime.Now };
+
+            //Act
+            repo.AddNewTask(chore1);
+            int expected_count = 1;
+            int actual_count = repo.Context.Chores.Count();
+
+            //Assert
+            Assert.AreEqual(expected_count, actual_count);
+
+        }
+
+        [TestMethod]
+        public void EnsureCanGetAllInstancesOfChore()
+        {
+
+            //Arrange
+            Chore chore1 = new Chore { ChoreID = 1, Name = "Mow the Lawn", status = Chore.Status.InProgress, Description = "Duh", CompletedOn = DateTime.Now };
+            Chore chore2 = new Chore { ChoreID = 2, Name = "Water the Cat", status = Chore.Status.Complete, Description = "Meow", CompletedOn = DateTime.Now };
+
+            //Act
+            repo.AddNewTask(chore1);
+            repo.AddNewTask(chore2);
+            int expected_count = 2;
+            int actual_count = repo.GetAllChores().Count;
+
+            //Assert
+            Assert.AreEqual(expected_count, actual_count);
+        }
+
+
+        
 
 
     }
