@@ -27,5 +27,12 @@ namespace BangazonAPI.DAL
         {
             return Context.Chores.ToList();
         }
+
+        public void DeleteTask(int choreId)
+        {
+            Chore found_chore = Context.Chores.FirstOrDefault(c => c.ChoreID == choreId);
+            Context.Chores.Remove(found_chore);
+            Context.SaveChanges();
+        }
     }
 }

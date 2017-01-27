@@ -86,8 +86,24 @@ namespace BangazonAPI.Tests.DAL
             Assert.AreEqual(expected_count, actual_count);
         }
 
+        [TestMethod]
+        public void EnsureCanDeleteInstanceOfChore()
+        {
+            //Arrange
+            Chore chore1 = new Chore { ChoreID = 1, Name = "Mow the Lawn", status = Chore.Status.InProgress, Description = "Duh", CompletedOn = DateTime.Now };
+            Chore chore2 = new Chore { ChoreID = 2, Name = "Water the Cat", status = Chore.Status.Complete, Description = "Meow", CompletedOn = DateTime.Now };
 
-        
+            //Act
+            repo.AddNewTask(chore1);
+            repo.AddNewTask(chore2);
+            repo.DeleteTask(2);
+            int expected_count = 1;
+            int actual_count = repo.GetAllChores().Count;
+            //Assert
+            Assert.AreEqual(expected_count, actual_count);
+        }
+
+
 
 
     }
