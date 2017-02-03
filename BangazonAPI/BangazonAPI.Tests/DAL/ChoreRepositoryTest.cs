@@ -112,9 +112,14 @@ namespace BangazonAPI.Tests.DAL
 
             //Act
             repo.AddNewChore(oldChore);
-            Chore newChore = new Chore { ChoreID = 1, Name = "newChore", Description = "Yup", CompletedOn = DateTime.Now };
-            repo.UpdateChore(newChore);
+            Chore updatedChore = new Chore { ChoreID = 1, Name = "newChore", Description = "Yup", CompletedOn = DateTime.Now };
+            repo.UpdateChore(updatedChore);
             //Assert
+            Assert.AreEqual("newChore", chores.FirstOrDefault(c => c.ChoreID == 1).Name);
+            Assert.AreEqual("Yup", chores.FirstOrDefault(c => c.ChoreID ==1).Description);
+            Assert.AreEqual(updatedChore.CompletedOn, chores.FirstOrDefault(c => c.ChoreID == 1).CompletedOn);
+
+        
         }
 
 
