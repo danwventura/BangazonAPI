@@ -45,25 +45,98 @@ namespace BangazonAPI.Tests.DAL
 
         }
 
-
-        [TestMethod]
-        public void EnsureCanAddInstanceOfChore()
-        {
-            Chore chore1 = new Chore {ChoreID = 1, Name = "Mow the Lawn", status = Chore.Status.InProgress, Description = "Duh", CompletedOn = DateTime.Now };
-            repo.AddNewTask(chore1);
-            int expected_count = 1;
-            int actual_count = repo.Context.Chores.Count();
-            Assert.AreEqual(expected_count, actual_count);
-
-        }
-
-
         [TestMethod]
         public void EnsureCanCreateInstanceOfRepo()
         {
             ChoreRepository repo = new ChoreRepository();
             Assert.IsNotNull(repo);
         }
+
+        [TestMethod]
+        public void EnsureCanAddInstanceOfChore()
+        {
+            //Arrange
+            Chore chore1 = new Chore {ChoreID = 1, Name = "Mow the Lawn", status = Chore.Status.InProgress, Description = "Duh", CompletedOn = DateTime.Now };
+
+            //Act
+            repo.AddNewChore(chore1);
+            int expected_count = 1;
+            int actual_count = repo.Context.Chores.Count();
+
+            //Assert
+            Assert.AreEqual(expected_count, actual_count);
+
+        }
+
+        [TestMethod]
+        public void EnsureCanGetAllInstancesOfChore()
+        {
+
+            //Arrange
+            Chore chore1 = new Chore { ChoreID = 1, Name = "Mow the Lawn", status = Chore.Status.InProgress, Description = "Duh", CompletedOn = DateTime.Now };
+            Chore chore2 = new Chore { ChoreID = 2, Name = "Water the Cat", status = Chore.Status.Complete, Description = "Meow", CompletedOn = DateTime.Now };
+
+            //Act
+            repo.AddNewChore(chore1);
+            repo.AddNewChore(chore2);
+            int expected_count = 2;
+            int actual_count = repo.GetAllChores().Count;
+
+            //Assert
+            Assert.AreEqual(expected_count, actual_count);
+        }
+
+        [TestMethod]
+        public void EnsureCanGetChoreByID()
+        {
+            //Arrange
+            Chore chore1 = new Chore { ChoreID = 1, Name = "Mow the Lawn", status = Chore.Status.InProgress, Description = "Duh", CompletedOn = DateTime.Now };
+            Chore chore2 = new Chore { ChoreID = 2, Name = "Water the Cat", status = Chore.Status.Complete, Description = "Meow", CompletedOn = DateTime.Now };
+
+            //Act
+            repo.AddNewChore(chore1);
+            repo.AddNewChore(chore2);
+            int expected_id = 2;
+            int actual_id = repo.GetChoreById(2).ChoreID;
+
+            //Assert
+            Assert.AreEqual(expected_id, actual_id);
+
+        }
+
+        [TestMethod]
+        public void EnsureCanUpdateChoreDetails()
+        {
+            //Arrange
+            Chore oldChore = new Chore { ChoreID = 1, Name = "oldChore", Description = "Duh", CompletedOn =  new DateTime(2016, 12, 20)};
+
+            //Act
+            repo.AddNewChore(oldChore);
+            Chore newChore = new Chore { ChoreID = 1, Name = "newChore", Description = "Yup", CompletedOn = DateTime.Now };
+            repo.UpdateChore(newChore);
+            //Assert
+        }
+
+
+
+        [TestMethod]
+        public void EnsureCanDeleteInstanceOfChore()
+        {
+            //Arrange
+            Chore chore1 = new Chore { ChoreID = 1, Name = "Mow the Lawn", status = Chore.Status.InProgress, Description = "Duh", CompletedOn = DateTime.Now };
+            Chore chore2 = new Chore { ChoreID = 2, Name = "Water the Cat", status = Chore.Status.Complete, Description = "Meow", CompletedOn = DateTime.Now };
+
+            //Act
+            repo.AddNewChore(chore1);
+            repo.AddNewChore(chore2);
+            repo.DeleteChore(2);
+            int expected_count = 1;
+            int actual_count = repo.GetAllChores().Count;
+            //Assert
+            Assert.AreEqual(expected_count, actual_count);
+        }
+
+
 
 
     }
